@@ -1,0 +1,1033 @@
+<html lang="en">
+
+<head>
+    <style>
+        .pac-container {
+            background-color: #fff;
+            position: absolute !important;
+            z-index: 1000;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+            border-top: 1px solid #d9d9d9;
+            font-family: Arial, sans-serif;
+            -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+            -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            overflow: hidden
+        }
+
+        .pac-logo:after {
+            content: "";
+            padding: 1px 1px 1px 0;
+            height: 18px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            text-align: right;
+            display: block;
+            background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/powered-by-google-on-white3.png);
+            background-position: right;
+            background-repeat: no-repeat;
+            -moz-background-size: 120px 14px;
+            background-size: 120px 14px
+        }
+
+        .hdpi.pac-logo:after {
+            background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/powered-by-google-on-white3_hdpi.png)
+        }
+
+        .pac-item {
+            cursor: default;
+            padding: 0 4px;
+            -o-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            line-height: 30px;
+            text-align: left;
+            border-top: 1px solid #e6e6e6;
+            font-size: 11px;
+            color: #515151
+        }
+
+        .pac-item:hover {
+            background-color: #fafafa
+        }
+
+        .pac-item-selected,
+        .pac-item-selected:hover {
+            background-color: #ebf2fe
+        }
+
+        .pac-matched {
+            font-weight: 700
+        }
+
+        .pac-item-query {
+            font-size: 13px;
+            padding-right: 3px;
+            color: #000
+        }
+
+        .pac-icon {
+            width: 15px;
+            height: 20px;
+            margin-right: 7px;
+            margin-top: 6px;
+            display: inline-block;
+            vertical-align: top;
+            background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/autocomplete-icons.png);
+            -moz-background-size: 34px;
+            background-size: 34px
+        }
+
+        .hdpi .pac-icon {
+            background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/autocomplete-icons_hdpi.png)
+        }
+
+        .pac-icon-search {
+            background-position: -1px -1px
+        }
+
+        .pac-item-selected .pac-icon-search {
+            background-position: -18px -1px
+        }
+
+        .pac-icon-marker {
+            background-position: -1px -161px
+        }
+
+        .pac-item-selected .pac-icon-marker {
+            background-position: -18px -161px
+        }
+
+        .pac-placeholder {
+            color: gray
+        }
+
+        .pac-target-input:-webkit-autofill {
+            -webkit-animation-name: beginBrowserAutofill;
+            animation-name: beginBrowserAutofill
+        }
+
+        .pac-target-input:not(:-webkit-autofill) {
+            -webkit-animation-name: endBrowserAutofill;
+            animation-name: endBrowserAutofill
+        }
+
+        sentinel {}
+    </style>
+    <style>
+        .pac-container {
+            background-color: #fff;
+            position: absolute !important;
+            z-index: 1000;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+            border-top: 1px solid #d9d9d9;
+            font-family: Arial, sans-serif;
+            -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+            -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            overflow: hidden
+        }
+
+        .pac-logo:after {
+            content: "";
+            padding: 1px 1px 1px 0;
+            height: 18px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            text-align: right;
+            display: block;
+            background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/powered-by-google-on-white3.png);
+            background-position: right;
+            background-repeat: no-repeat;
+            -moz-background-size: 120px 14px;
+            background-size: 120px 14px
+        }
+
+        .hdpi.pac-logo:after {
+            background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/powered-by-google-on-white3_hdpi.png)
+        }
+
+        .pac-item {
+            cursor: default;
+            padding: 0 4px;
+            -o-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            line-height: 30px;
+            text-align: left;
+            border-top: 1px solid #e6e6e6;
+            font-size: 11px;
+            color: #515151
+        }
+
+        .pac-item:hover {
+            background-color: #fafafa
+        }
+
+        .pac-item-selected,
+        .pac-item-selected:hover {
+            background-color: #ebf2fe
+        }
+
+        .pac-matched {
+            font-weight: 700
+        }
+
+        .pac-item-query {
+            font-size: 13px;
+            padding-right: 3px;
+            color: #000
+        }
+
+        .pac-icon {
+            width: 15px;
+            height: 20px;
+            margin-right: 7px;
+            margin-top: 6px;
+            display: inline-block;
+            vertical-align: top;
+            background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/autocomplete-icons.png);
+            -moz-background-size: 34px;
+            background-size: 34px
+        }
+
+        .hdpi .pac-icon {
+            background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/autocomplete-icons_hdpi.png)
+        }
+
+        .pac-icon-search {
+            background-position: -1px -1px
+        }
+
+        .pac-item-selected .pac-icon-search {
+            background-position: -18px -1px
+        }
+
+        .pac-icon-marker {
+            background-position: -1px -161px
+        }
+
+        .pac-item-selected .pac-icon-marker {
+            background-position: -18px -161px
+        }
+
+        .pac-placeholder {
+            color: gray
+        }
+
+        .pac-target-input:-webkit-autofill {
+            -webkit-animation-name: beginBrowserAutofill;
+            animation-name: beginBrowserAutofill
+        }
+
+        .pac-target-input:not(:-webkit-autofill) {
+            -webkit-animation-name: endBrowserAutofill;
+            animation-name: endBrowserAutofill
+        }
+
+        sentinel {}
+    </style>
+    <title>Carry Go</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="https://www.carrygo.co/public/images/system/fav_icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.carrygo.co/public/FrontEnd/customer/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.carrygo.co/public/FrontEnd/customer/css/style.css">
+    <link rel="stylesheet" href="https://www.carrygo.co/public/FrontEnd/customer/css/developer.css">
+    <link rel="stylesheet" href="https://www.carrygo.co/public/FrontEnd/customer/css/cropper.css">
+    <link rel="stylesheet" href="https://www.carrygo.co/public/css/common_style.css">
+    <link rel="stylesheet" href="https://www.carrygo.co/public/FrontEnd/transporter/css/sweetalert2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/css/bootstrap-datepicker.css">
+    <!-- jQuery -->
+    <script src="https://www.carrygo.co/public/FrontEnd/customer/js/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-PGQYZ1JXES"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-PGQYZ1JXES');
+    </script>
+    <script type="text/javascript" charset="UTF-8"
+        src="https://maps.googleapis.com/maps-api-v3/api/js/52/6/common.js"></script>
+    <script type="text/javascript" charset="UTF-8"
+        src="https://maps.googleapis.com/maps-api-v3/api/js/52/6/util.js"></script>
+    <script type="text/javascript" charset="UTF-8"
+        src="https://maps.googleapis.com/maps-api-v3/api/js/52/6/log.js"></script>
+    <script type="text/javascript" charset="UTF-8"
+        src="https://maps.googleapis.com/maps-api-v3/api/js/52/6/controls.js"></script>
+    <script type="module" src="chrome-extension://jdkknkkbebbapilgoeccciglkfbmbnfm/hook.js"></script>
+    <script type="text/javascript" charset="UTF-8"
+        src="https://maps.googleapis.com/maps-api-v3/api/js/52/6/places_impl.js"></script>
+</head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+
+<body class="" data-new-gr-c-s-check-loaded="14.1102.0" data-gr-ext-installed="" cz-shortcut-listen="true">
+    <div id="loader" style="display: none;"></div>
+
+    <style type="text/css">
+        .trans_min {
+            min-height: 284px;
+            height: 300px;
+            overflow: auto;
+        }
+    </style>
+
+    <!--  banner_area_here -->
+    <section class="banner_area">
+
+        <!-- header-here -->
+        <header class="header">
+            <div class="container">
+                <div class="main_navbar">
+                    <nav class="navbar">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="https://www.carrygo.co">
+                                <img src="https://www.carrygo.co/public/images/system/carrygo-delivery-company-in-nigeria.png"
+                                    alt="CarryGo_logo">
+                            </a>
+                        </div>
+                        <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+                            <ul class="nav navbar-nav nav_links">
+                                <li class="active"><a href="https://www.carrygo.co/search-deliveries">Search
+                                        Deliveries</a>
+                                </li>
+                                <li><a href="https://www.carrygo.co/how-it-works">How It Works</a></li>
+                                <li><a href="https://www.carrygo.co/help">Help </a></li>
+                                <li><a href="https://blog.carrygo.co/">Blog </a></li>
+                                <li><a href="https://www.carrygo.co/login">Log in </a></li>
+                            </ul>
+                            <ul class="nav navbar-nav right-side nav-right">
+                                <li><a href="#customerOptions" data-toggle="modal"
+                                        class="btn_style transporter_signup_btn">Transporter Sign Up</a></li>
+                                <li><a href="https://www.carrygo.co/customer/post-new-job"
+                                        class="btn_style bg_orange">Get Free Quotes</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <!-- header-here -->
+
+        <div class="modal fade" id="customerOptions" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <div class="logo text-center">
+                            <a href="https://www.carrygo.co">
+                                <img src="https://www.carrygo.co/public/images/system/login_logo.png" alt="login_logo">
+                            </a>
+                        </div>
+                        <h4 class="modal-title">Please select your <span>account type!</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="content">
+                                    <a href="https://www.carrygo.co/transporter-company-signup">
+                                        <img src="https://www.carrygo.co/public/images/system/company.png"
+                                            alt="customer_image">
+                                        <p>As a Company</p>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="content">
+                                    <a href="https://www.carrygo.co/transporter-signup">
+                                        <img src="https://www.carrygo.co/public/images/system/individual.png"
+                                            alt="individual_image">
+                                        <p>As an Individual</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+
+
+        <div class="container">
+            <div class="content_box">
+                <div class="banner_area_content">
+                    <div class="heading">
+                        <h1>We <span class="Anything">CARRY</span> Anything</h1>
+                        <br>
+                        <h1>We <span class="go">Go</span> Anywhere</h1>
+                    </div>
+                    <div class="get_astimate_box">
+                        <ul>
+                            <form method="post" id="get_estimate_form"
+                                action="https://www.carrygo.co/customer/get-estimate" novalidate="novalidate">
+                                <input type="hidden" name="_token" value="HDPZfscSCGOs7YEnDqvzUqL7b6joQ4Yani9BRizs">
+                                <input type="hidden" name="pickup_latitude" id="pickup_latitude">
+                                <input type="hidden" name="pickup_longitude" id="pickup_longitude">
+                                <input type="hidden" name="drop_latitude" id="dropoff_latitude">
+                                <input type="hidden" name="drop_longitude" id="dropoff_longitude">
+                                <li class="pickup">
+                                    <div>
+                                        <img src="https://www.carrygo.co/public/images/system/up-arrow.png"
+                                            alt="up_arrow">
+                                        <h5>Pickup Address</h5>
+                                        <div class="form-group">
+                                            <!-- <input type="email" class="form-control" id="" aria-describedby="emailHelp" placeholder="Enter Pickup"> -->
+                                            <input type="text" class="form-control pac-target-input"
+                                                name="pickup_location" placeholder="Enter Pickup Address"
+                                                id="input_pickup_location" onkeypress="return RestrictStartSpace(this)"
+                                                value="" autocomplete="off">
+                                            <span class="error pickup_loc_err"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="pickup destination">
+                                    <div>
+                                        <img src="https://www.carrygo.co/public/images/system/down-arrow.png"
+                                            alt="up_arrow">
+                                        <h5>Drop Off Address</h5>
+                                        <div class="form-group">
+                                            <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Destination"> -->
+                                            <input type="text" class="form-control pac-target-input"
+                                                name="drop_location" placeholder="Enter Drop Off Address"
+                                                id="input_dropoff_location" onkeypress="return RestrictStartSpace(this)"
+                                                value="" autocomplete="off">
+                                            <span class="error drop_loc_err"></span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="get_estimate_list">
+                                    <div class="get_estimate_button">
+                                        <button type="submit" class="button_style">Get Free Quotes</button>
+                                    </div>
+                                </li>
+                                <li class="clear"></li>
+                            </form>
+                        </ul>
+                    </div>
+                    <div class="banner_image text-center">
+                        <img src="https://www.carrygo.co/public/images/system/truck_images.png" alt="truck_images">
+                    </div>
+                    <div class="banner_bottom_content">
+                        <h1>Truck as big as you need</h1>
+                        <p>Ranging from Pickup Trucks to Cargo Vans and Sprinter Vans.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--  banner_area_here -->
+
+    <!-- how it work here -->
+    <section class="how_it_work">
+        <div class="container">
+            <div class="content_box">
+                <div class="row how_it_work_box">
+                    <div class="col-sm-4">
+                        <div class="Transparent trans_min">
+                            <img src="https://www.carrygo.co/public/images/system/top-10-delivery-companies-in-nigeria.png"
+                                alt="transparent_image">
+                            <h3>Transparent Pricing</h3>
+                            <p></p>
+                            <p>We offer the ability to see all bid prices, ask questions before accepting a bid and read
+                                valuable feedback.</p>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="Transparent trans_min">
+                            <img src="https://www.carrygo.co/public/images/system/top-courier-companies-in-nigeria.png"
+                                alt="transparent_image">
+                            <h3>Fast &amp; Efficient Delivery</h3>
+                            <p></p>
+                            <p>With our real-time messaging system you can discuss and book your delivery effortlessly.
+                            </p>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="Transparent trans_min">
+                            <img src="https://www.carrygo.co/public/images/system/carry-go.png" alt="transparent_image">
+                            <h3>Get 24/7 Access</h3>
+                            <p></p>
+                            <p>You have 24 hours, 7 days a week access to our platform.</p>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="how_heading">
+                    <h1>Here's how it works</h1>
+                    <p>Anything moved in 3 easy steps</p>
+                    <span></span>
+                </div>
+                <div class="video_popup">
+
+                    <video preload="auto" class="embed-responsive-item" controls="controls" style="width: 100%">
+                        <source src="https://www.carrygo.co/public/images/system/customer_how_it_works.mp4#t=0.2"
+                            type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+
+                </div>
+                <div class="row transport_section">
+                    <div class="col-sm-6 transport_main_box">
+                        <div class="Transport_content">
+                            <span>1</span>
+                            <h3>LIST ITEMS</h3>
+                            <ul style="font-size: 20px; color: #333333;">
+                                <li>
+                                    <p>• Simply tell us what needs to be moved in job type.</p>
+                                    <p>&nbsp;</p>
+                                    <p>• Add pick up and delivery addresses.</p>
+                                    <p>&nbsp;</p>
+                                    <p>• Give as much additional information as you can.</p>
+                                    <p>&nbsp;</p>
+                                    <p>• Now post your job.</p>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 transport_main_box">
+                        <div class="transport-image">
+                            <img src="https://www.carrygo.co/public/images/system/express-delivery-company-in-nigeria.png"
+                                alt="transparent1">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 transport_main_box">
+                        <div class="transport-image">
+                            <img src="https://www.carrygo.co/public/images/system/interstate-delivery-service-in-nigeria.png"
+                                alt="transparent1">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 transport_main_box">
+                        <div class="Transport_content">
+                            <span>2</span>
+                            <h3>GET QUOTES</h3>
+                            <ul style="font-size: 20px; color: #333333;">
+                                <li>
+                                    <ul
+                                        style="box-sizing: border-box; margin: 0px; list-style: none; padding: 0px; color: #333333; font-family: 'Proxima Nova Rg'; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; font-size: 20px;">
+                                        <li style="box-sizing: border-box; list-style: none;">• You can now relax as
+                                            transport providers send you Free</li>
+                                        <li style="box-sizing: border-box; list-style: none;">&nbsp; &nbsp;quotes.</li>
+                                        <li style="box-sizing: border-box; list-style: none;">&nbsp;</li>
+                                        <li style="box-sizing: border-box; list-style: none;">• Compare all quotes and
+                                            feedback from real customers.</li>
+                                        <li style="box-sizing: border-box; list-style: none;">&nbsp;</li>
+                                        <li style="box-sizing: border-box; list-style: none;">• With our real time
+                                            message system you can ask questions</li>
+                                        <li style="box-sizing: border-box; list-style: none;">&nbsp; &nbsp;regarding
+                                            your job and discuss with transport providers.</li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 transport_main_box">
+                        <div class="Transport_content">
+                            <span>3</span>
+                            <h3>CHOOSE A TRANSPORT PROVIDER</h3>
+                            <ul style="font-size: 20px; color: #333333;">
+                                <li>
+                                    <ul
+                                        style="box-sizing: border-box; margin: 0px; list-style: none; padding: 0px; color: #333333; font-family: 'Proxima Nova Rg'; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; font-size: 20px;">
+                                        <li style="box-sizing: border-box; list-style: none;">• From the quotes you
+                                            receive pick a transporter.</li>
+                                        <li style="box-sizing: border-box; list-style: none;">&nbsp;</li>
+                                        <li style="box-sizing: border-box; list-style: none;">• Once you are happy with
+                                            you're choice click 'accept' button.</li>
+                                        <li style="box-sizing: border-box; list-style: none;">&nbsp;</li>
+                                        <li style="box-sizing: border-box; list-style: none;">• Now arrange collection
+                                            and delivery directly with transporter.</li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 transport_main_box transport_provider">
+                        <div class="transport-image">
+                            <img src="https://www.carrygo.co/public/images/system/list-of-delivery-companies-in-nigeria.png"
+                                alt="transparent1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--     how it work here -->
+    <!-- testimonial here -->
+    <section class="testimonial">
+        <div class="container">
+            <div class="content_box ">
+                <div class="how_heading testimonial_heading">
+                    <h1>Clients Testimonial</h1>
+                    <p>It is a long established fact that a reader will be distracted</p>
+                    <span></span>
+                </div>
+                <div class=" testimonial_content">
+                    <!-- <p class="text-center">CarryGo team is the best of the best, and expertly trained team members who take the extra step and go the extra mile, all to fulfill our dedicated promise to deliver innovative and dynamic solutions to our customers to fit the needs of a rapidly changing global environment.</p> -->
+                    <div class="col-md-12">
+                        <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+                            <!-- Carousel Slides / Quotes -->
+                            <div class="carousel-inner text-center">
+                                <!-- Quote 1 -->
+                                <div class="item">
+                                    <p class="text-center">This concept is so great, never seen anything like this, and
+                                        its so quick to find someone. good job guys.</p>
+                                </div>
+                                <!-- Quote 1 -->
+                                <div class="item active">
+                                    <p class="text-center">Well-done, I am happy with this service, would spread the
+                                        word and use again. cheers</p>
+                                </div>
+                                <!-- Quote 1 -->
+                                <div class="item">
+                                    <p class="text-center">Na wa o, this CarryGo platform is the best, they are friendly
+                                        and reliable, big love to their team members who take the extra step and go the
+                                        extra mile, thanks, very happy with the job you did for me.</p>
+                                </div>
+                                <!-- Quote 1 -->
+                                <div class="item">
+                                    <p class="text-center"></p>
+                                    <p>Super happy, fast service, reliable and friendly guys...to be honest i just
+                                        thought to try and i am happy i did. Guys Carrygo is highly recommended!</p>
+                                    <p></p>
+                                </div>
+                            </div>
+                            <!-- Bottom Carousel Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#quote-carousel" data-slide-to="0" class="">
+                                    <img class="img-responsive "
+                                        src="https://www.carrygo.co/public/images/testimonials/1632735629_7372.jpg"
+                                        alt="">
+                                    <h3>Nonye Cole</h3>
+                                    <p>Tanker needed</p>
+                                </li>
+                                <li data-target="#quote-carousel" data-slide-to="1" class="active">
+                                    <img class="img-responsive "
+                                        src="https://www.carrygo.co/public/images/testimonials/1632735495_2537.jpg"
+                                        alt="">
+                                    <h3>Emeka Nwogu</h3>
+                                    <p>Film equip. from Surulere</p>
+                                </li>
+                                <li data-target="#quote-carousel" data-slide-to="2" class="">
+                                    <img class="img-responsive "
+                                        src="https://www.carrygo.co/public/images/testimonials/1632733954_6017.jpg"
+                                        alt="">
+                                    <h3>Oluwatobi wade</h3>
+                                    <p>Ikeja move(Office stuff)</p>
+                                </li>
+                                <li data-target="#quote-carousel" data-slide-to="3" class="">
+                                    <img class="img-responsive "
+                                        src="https://www.carrygo.co/public/images/testimonials/1632735762_3303.jpg"
+                                        alt="">
+                                    <h3>David Isiekwe</h3>
+                                    <p>Magodo to Lekki</p>
+                                </li>
+                            </ol>
+                            <!-- Carousel Buttons Next/Prev -->
+                            <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i
+                                    class="fa fa-chevron-left"></i></a>
+                            <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i
+                                    class="fa fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- testimonial here -->
+    <!-- delivery_work here -->
+    <section class="delivery_work">
+        <div class=" container">
+            <div class="content_box">
+                <div class="delivery_work_content">
+                    <h4>Looking for delivery work?</h4>
+                    <h1>Become A Transpoter?</h1>
+                    <div>
+                        <a href="#customerOptions" data-toggle="modal" class="btn_style">Register Now<span><i
+                                    class="fa fa-long-arrow-right" aria-hidden="true"></i></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- delivery_work here -->
+    <!-- download here -->
+    <section class="download">
+        <div class="container">
+            <div class="content_box">
+                <div class="row">
+                    <div class="col-sm-5 text-center">
+                        <div class="download_left_content">
+
+                            <img src="https://www.carrygo.co/public/images/system/carrygo-courier-delivery-company-app.png"
+                                alt="carrygo_phone">
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="download_right_content">
+                            <h1>Download the CarryGo App</h1>
+                            <p></p>
+                            <p>There’s more to love in the apps. Make more money while being a transporter.</p>
+                            <p></p>
+                            <ul class="download_button_list">
+                                <li>
+                                    <a href="https://apps.apple.com/il/app/carrygo/id1556993457"><img
+                                            src="https://www.carrygo.co/public/images/system/app_store.png"
+                                            alt="app_store"></a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://play.google.com/store/apps/details?id=com.carrygo&amp;hl=en&amp;gl=US"><img
+                                            src="https://www.carrygo.co/public/images/system/google-play.png"
+                                            alt="google-play"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- download here -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="bank_detail_added_modal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content main_model">
+                <div class="header_model">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"
+                            aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="https://www.carrygo.co/public/images/system/clock.png" alt="chek">
+                    <h1 class="review_heading">Your profile is under review.</h1>
+                    <h4 class="verification">Your profile information has been submitted to admin, please wait for the
+                        profile verification. </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+
+    <!-- footer here -->
+    <footer>
+        <div class="footer">
+            <div class="container">
+                <div class="content_box">
+                    <div class="row">
+                        <div class="col-sm-4 left_content">
+                            <div class="footer_content_logo_side">
+                                <a href="https://www.carrygo.co"><img
+                                        src="https://www.carrygo.co/public/images/system/carrygo-delivery-company-in-lagos.png"
+                                        alt="footer_logo"></a>
+                                <p></p>
+                                <p>With years of experience in providing logistics and delivery services, CarryGo.co
+                                    remains one of the trusted names in the Nigerian Logistics and delivery industry.
+                                </p>
+                                <p></p>
+                                <a href="https://www.carrygo.co/about-us">+Read More</a>
+
+                                <div class="">
+                                    <p><a href="https://www.carrygo.co/web/terms-and-conditions">Terms &amp;
+                                            Conditions</a></p>
+                                    <p><a href="https://www.carrygo.co/web/privacy-policy">Privacy Policy</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 social_links ">
+                            <div class="footer_content">
+                                <h4>Social Links</h4>
+                                <p><a href="https://web.facebook.com/CarryGo-334117267926958/"><i class="fa fa-facebook"
+                                            aria-hidden="true"></i>Facebook</a></p>
+                                <p><a href="https://twitter.com/CarryGo9"><i class="fa fa-twitter"
+                                            aria-hidden="true"></i>Twitter</a></p>
+                                <p><a href="https://www.youtube.com/channel/UCJzkzAl-WJCWzCaJhT0vbvw"><i
+                                            class="fa fa-google-plus" aria-hidden="true"></i>Youtube</a></p>
+                                <p><a href="https://www.linkedin.com/company/carrygo "><i class="fa fa-linkedin"
+                                            aria-hidden="true"></i>Linkedin</a></p>
+                                <p><a href="https://www.instagram.com/carrygo.co/" target="_blank"><i
+                                            class="fa fa-instagram" aria-hidden="true"></i>Instagram</a></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 links_box">
+                            <div class="footer_content Quick-links-list">
+                                <h4>Quick Links</h4>
+                                <p><a href="https://www.carrygo.co/search-deliveries">Search Deliveries</a></p>
+                                <p><a href="https://www.carrygo.co/how-it-works">How It Works</a></p>
+                                <p><a href="https://www.carrygo.co/help">Help</a></p>
+                                <p><a href="https://www.carrygo.co/blogs">Blog </a></p>
+                                <p><a href="https://www.carrygo.co/login">Login</a></p>
+                                <p><a href="#customerOptions" data-toggle="modal">Transporter Sign Up</a></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 contact_box">
+                            <div class="footer_content">
+                                <h4>Contact Info</h4>
+                                <p><span><i class="fa fa-map-marker" aria-hidden="true"></i></span><a
+                                        href="https://maps.google.com/?q=20c CarryGo Avenue, Lagos, Nigeria"
+                                        target="_blank">20 Adebayo Banjo Street, Opebi, Ikeja, Lagos, Nigeria</a></p>
+                                <p><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:+234 700 200 5000">+234
+                                        700 200 5000</a></p>
+                                <p><i class="fa fa-envelope" aria-hidden="true"></i><a
+                                        href="mailto:info@carrygo.co">info@carrygo.co</a></p>
+                                <p><i class="fa fa-clock-o" aria-hidden="true"></i></p>
+                                <p>Week days 09:00-17:00 Saturday 09:00 - 13:00&nbsp;</p>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer_copy_right text-center">
+            <p><i class="fa fa-copyright" aria-hidden="true"></i> Copyright 2023. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- footer here -->
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://www.carrygo.co/public/FrontEnd/customer/js/bootstrap.min.js"></script>
+    <script src="https://www.carrygo.co/public/FrontEnd/customer/js/jquery.validate.js"></script>
+    <script src="https://www.carrygo.co/public/FrontEnd/transporter/js/sweetalert2.js"></script>
+    <script src="https://www.carrygo.co/public/FrontEnd/customer/js/main.js"></script>
+
+    <script src="https://www.carrygo.co/public/FrontEnd/customer/js/cropper.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- validation rules -->
+    <script src="https://www.carrygo.co/public/FrontEnd/customer/js/form_validation.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.options = {
+                "debug": false,
+                // "positionClass": "toast-bottom-full-width",
+                "onclick": null,
+                // "fadeIn": 300,
+                "fadeOut": 1000,
+                "timeOut": 5000,
+                //"showDuration" : 5000,
+                "extendedTimeOut": 5000
+            }
+
+        });
+
+
+    </script>
+
+    <script type="text/javascript">
+        function RestrictStartSpace(e) {
+
+            var text = e.value;
+
+            if (event.keyCode == 32 && text == '') {
+                return false;
+            }
+        }
+
+        function RestrictSpace(e) {
+
+            if (event.keyCode == 32) {
+                return false;
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        function readDlURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('.image_prev').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(".imgDlInp").change(function () {
+
+            var img_name = $(this).val();
+            var img_arr = img_name.split('.');
+            var ext = img_arr.pop();
+            ext = ext.toLowerCase();
+
+            if (ext != 'jpeg' && ext != 'jpg' && ext != 'png') {
+                $(this).val('');
+                $('.image_prev').attr('src', "https://www.carrygo.co/public/images/system/upload_image.png");
+                alert("Please select an image of .jpeg, .jpg, .png file format");
+                return false;
+            } else {
+                $('#driving_license-error').remove();
+                readDlURL(this);
+            }
+        });
+
+        function readInsURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('.ins_img_prev').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(".ins_img_inpt").change(function () {
+
+            var img_name = $(this).val();
+            var img_arr = img_name.split('.');
+            var ext = img_arr.pop();
+            ext = ext.toLowerCase();
+
+            if (ext != 'jpeg' && ext != 'jpg' && ext != 'png') {
+                $(this).val('');
+                $('.ins_img_prev').attr('src', "https://www.carrygo.co/public/images/system/upload_image.png");
+                alert("Please select an image of .jpeg, .jpg, .png file format");
+                return false;
+            } else {
+                $('#insurance_policy-error').remove();
+                readInsURL(this);
+            }
+        });
+    </script>
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var tz = jstz.determine();
+            var tzname = tz.name();
+
+            $.ajax({
+                url: "https://www.carrygo.co/save-timezone",
+                type: "POST",
+                data: { '_token': "HDPZfscSCGOs7YEnDqvzUqL7b6joQ4Yani9BRizs", 'timezone': tzname },
+                dataType: 'json',
+
+                success: function (response) {
+                    console.log('response = ', response)
+
+                }
+            });
+        });
+
+        if (performance.navigation.type == 2) {
+            location.reload();
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        $('#input_pickup_location').on('keyup', function () {
+            $('#pickup_latitude').val('');
+            $('#pickup_longitude').val('');
+            $('.pickup_loc_err').text('');
+        });
+
+        $('#input_dropoff_location').on('keyup', function () {
+            $('#dropoff_latitude').val('');
+            $('#dropoff_longitude').val('');
+            $('.drop_loc_err').text('');
+        });
+    </script>
+
+    <script>
+        var vid = document.getElementById("gossVideo");
+        function playVid() {
+            vid.play();
+        }
+
+        function pauseVid() {
+            vid.pause();
+        }
+    </script>
+
+    <script type="text/javascript">
+    </script>
+
+    <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQfSV8L6jv8o-wpKadXJWMMtTkQck1Tb0&amp;libraries=places,geometry"></script>
+
+    <script type="text/javascript">
+        var pickup_address = document.getElementById('input_pickup_location');
+        var autocomplete_pickup_address = new google.maps.places.Autocomplete(pickup_address);
+        // alert(address);
+        google.maps.event.addListener(autocomplete_pickup_address, 'place_changed', function () {
+
+            var pickup_address = autocomplete_pickup_address.getPlace();
+            document.getElementById('pickup_latitude').value = pickup_address.geometry.location.lat();
+            document.getElementById('pickup_longitude').value = pickup_address.geometry.location.lng();
+            $('.pickup_loc_err').text('');
+        });
+    </script>
+
+    <script type="text/javascript">
+        var address = document.getElementById('input_dropoff_location');
+        var autocomplete_address = new google.maps.places.Autocomplete(address);
+        // alert(autocomplete_address);
+        google.maps.event.addListener(autocomplete_address, 'place_changed', function () {
+
+            var address = autocomplete_address.getPlace();
+            // alert(address);
+            document.getElementById('dropoff_latitude').value = address.geometry.location.lat();
+            document.getElementById('dropoff_longitude').value = address.geometry.location.lng();
+            $('.drop_loc_err').text('');
+        });
+    </script>
+
+
+
+    <div class="pac-container pac-logo"
+        style="display: none; width: 342px; position: absolute; left: 35px; top: 449px;"></div>
+    <div class="pac-container pac-logo"
+        style="display: none; width: 342px; position: absolute; left: 35px; top: 539px;"></div>
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+
+</html>
